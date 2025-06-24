@@ -2,21 +2,16 @@ import React from "react";
 import Modal from "react-modal";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
-Modal.setAppElement("#root"); // Only once in your app
-
 export default function StockDetailsModal({ isOpen, onRequestClose, stock }) {
   if (!stock) {
-    console.error("Stock is undefined or null in StockDetailsModal.");
-    return null;
+    return null; // Prevent rendering if stock is undefined or null
   }
-
-  console.log("Stock passed to modal:", stock);
 
   // Example price history (replace with real data if available)
   const priceHistory = [
-    { date: "2025-06-01", price: stock.purchasePrice },
-    { date: "2025-06-10", price: (stock.purchasePrice + stock.currentPrice) / 2 },
-    { date: "2025-06-19", price: stock.currentPrice },
+    { date: "2025-06-01", price: stock.purchasePrice || 0 },
+    { date: "2025-06-10", price: ((stock.purchasePrice || 0) + (stock.currentPrice || 0)) / 2 },
+    { date: "2025-06-19", price: stock.currentPrice || 0 },
   ];
 
   return (
@@ -41,16 +36,16 @@ export default function StockDetailsModal({ isOpen, onRequestClose, stock }) {
       }}
     >
       <h2 style={{ color: "#00ffe7", textAlign: "center" }}>
-        {stock.name} ({stock.symbol})
+        {stock.name || "Unknown"} ({stock.symbol || "N/A"})
       </h2>
       <div style={{ margin: "18px 0" }}>
-        <div>Quantity: <b>{stock.quantity}</b></div>
-        <div>Purchase Price: <b>₹{stock.purchasePrice}</b></div>
-        <div>Current Price: <b>₹{stock.currentPrice}</b></div>
+        <div>Quantity: <b>{stock.quantity || 0}</b></div>
+        <div>Purchase Price: <b>₹{stock.purchasePrice || 0}</b></div>
+        <div>Current Price: <b>₹{stock.currentPrice || 0}</b></div>
         <div>
           Profit/Loss:{" "}
           <b style={{ color: stock.currentPrice >= stock.purchasePrice ? "#00ffe7" : "#ff4e50" }}>
-            ₹{((stock.currentPrice - stock.purchasePrice) * stock.quantity).toLocaleString()}
+            ₹{(((stock.currentPrice || 0) - (stock.purchasePrice || 0)) * (stock.quantity || 0)).toLocaleString()}
           </b>
         </div>
       </div>
@@ -75,6 +70,8 @@ export default function StockDetailsModal({ isOpen, onRequestClose, stock }) {
     </Modal>
   );
 }
+
+
 
 
 

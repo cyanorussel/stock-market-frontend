@@ -1,5 +1,13 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
 export default function PortfolioAnalytics({ portfolio }) {
   // Calculate analytics
@@ -12,50 +20,50 @@ export default function PortfolioAnalytics({ portfolio }) {
     0
   );
   const profitLoss = totalValue - totalCost;
-  const percentChange = totalCost === 0 ? 0 : ((profitLoss / totalCost) * 100).toFixed(2);
+  const percentChange =
+    totalCost === 0 ? 0 : ((profitLoss / totalCost) * 100).toFixed(2);
 
-  // Example chart data (replace with real history if available)
-  const chartData = [
-    { date: "2025-06-01", value: totalCost * 0.95 },
-    { date: "2025-06-10", value: totalCost * 1.05 },
-    { date: "2025-06-19", value: totalValue },
-  ];
+  // Prepare data for the chart
+  const chartData = portfolio.map((stock) => ({
+    name: stock.name || "Unknown",
+    currentValue: stock.currentPrice * stock.quantity,
+    investedAmount: stock.purchasePrice * stock.quantity,
+  }));
 
   return (
-    <div className="portfolio-analytics" style={{ marginBottom: 32 }}>
-      <h2 style={{ color: "#00ffe7", textAlign: "center" }}>Portfolio Analytics</h2>
-      <div style={{
-        display: "flex",
-        justifyContent: "space-around",
-        margin: "24px 0",
-        flexWrap: "wrap",
-        gap: "24px"
-      }}>
-        <div>
-          <div style={{ fontWeight: 600 }}>Total Value</div>
-          <div style={{ color: "#a3ffe7", fontSize: "1.3rem" }}>₹{totalValue.toLocaleString()}</div>
-        </div>
-        <div>
-          <div style={{ fontWeight: 600 }}>Profit/Loss</div>
-          <div style={{ color: profitLoss >= 0 ? "#00ffe7" : "#ff4e50", fontSize: "1.3rem" }}>
-            {profitLoss >= 0 ? "+" : "-"}₹{Math.abs(profitLoss).toLocaleString()}
-          </div>
-        </div>
-        <div>
-          <div style={{ fontWeight: 600 }}>Change (%)</div>
-          <div style={{ color: percentChange >= 0 ? "#00ffe7" : "#ff4e50", fontSize: "1.3rem" }}>
-            {percentChange}%
-          </div>
-        </div>
-      </div>
-      <div style={{ width: "100%", height: 250 }}>
+    <div>
+      <h3>Portfolio Analytics</h3>
+      <p>
+        <strong>Total Value:</strong> ₹{totalValue.toFixed(2)}
+      </p>
+      <p>
+        <strong>Total Cost:</strong> ₹{totalCost.toFixed(2)}
+      </p>
+      <p>
+        <strong>Profit/Loss:</strong> ₹{profitLoss.toFixed(2)} (
+        {percentChange}%)
+      </p>
+
+      {/* Render the chart */}
+      <div style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
           <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="date" stroke="#a3ffe7" />
-            <YAxis stroke="#a3ffe7" />
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
             <Tooltip />
-            <Line type="monotone" dataKey="value" stroke="#00ffe7" strokeWidth={3} />
+            <Line
+              type="monotone"
+              dataKey="currentValue"
+              stroke="#00ffe7"
+              strokeWidth={2}
+            />
+            <Line
+              type="monotone"
+              dataKey="investedAmount"
+              stroke="#ff4e50"
+              strokeWidth={2}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>

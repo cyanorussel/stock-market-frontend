@@ -1,6 +1,6 @@
 //App.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
 import PortfolioList from "./components/PortfolioList";
@@ -9,6 +9,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import StockDetailsModal from "./components/StockDetailsModal";
 import PortfolioAnalytics from "./components/PortfolioAnalytics";
 import Dashboard from "./components/Dashboard";
+import { calculateCurrentValue, calculateInvestedAmount, calculateProfitLossPercentage } from './utils/portfolioUtils';
 
 const App = () => {
     const [portfolios, setPortfolios] = useState([]);
@@ -42,9 +43,14 @@ const App = () => {
         fetchPortfolios();
     }, []);
 
-    const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
-    };
+    const toggleTheme = useCallback(() => {
+        setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+        document.body.setAttribute("data-theme", theme === "dark" ? "light" : "dark");
+    }, [theme]);
+
+    useEffect(() => {
+        document.body.setAttribute("data-theme", theme);
+    }, [theme]);
 
     return (
         <div className="container">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Dashboard.css"; // Ensure you have CSS for light and dark themes
 
-export default function Dashboard({ portfolio, recentActivity, onAddClick, onExportClick }) {
+export default function Dashboard({ portfolio, recentActivity }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -18,6 +18,8 @@ export default function Dashboard({ portfolio, recentActivity, onAddClick, onExp
   );
   const profitLoss = totalValue - totalCost;
   const percentChange = totalCost === 0 ? 0 : ((profitLoss / totalCost) * 100).toFixed(2);
+
+  if (!recentActivity || recentActivity.length === 0) return null;
 
   return (
     <div className={`dashboard ${isDarkMode ? "dark-mode" : "light-mode"}`}>

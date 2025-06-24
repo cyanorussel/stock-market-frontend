@@ -151,6 +151,7 @@ form {
     overflow: hidden;
     background: rgba(30, 34, 44, 0.85);
     box-shadow: 0 0 16px var(--accent2)22;
+    overflow-x: auto;
 }
 
 .stock-table th,
