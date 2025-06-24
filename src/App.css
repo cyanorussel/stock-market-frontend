@@ -1,12 +1,28 @@
 /* Futuristic Modern App.css */
 
+:root {
+  --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+  --container-bg: rgba(30, 34, 44, 0.85);
+  --text-color: #e0e0e0;
+  --accent: #00ffe7;
+  --accent2: #a3ffe7;
+}
+
+[data-theme="light"] {
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --container-bg: rgba(255, 255, 255, 0.85);
+  --text-color: #232526;
+  --accent: #007cf0;
+  --accent2: #00ffe7;
+}
+
 body {
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background: linear-gradient(135deg, #232526 0%, #414345 100%);
-    color: #e0e0e0;
-    min-height: 100vh;
-    margin: 0;
-    letter-spacing: 0.03em;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  min-height: 100vh;
+  margin: 0;
+  letter-spacing: 0.03em;
 }
 
 .container {
@@ -15,7 +31,7 @@ body {
     margin: 40px auto;
     padding: 32px 24px;
     border-radius: 24px;
-    background: rgba(30, 34, 44, 0.85);
+    background: var(--container-bg);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(8px);
     border: 1.5px solid rgba(255, 255, 255, 0.18);
@@ -30,15 +46,15 @@ body {
     font-size: 2.6rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #00ffe7;
-    text-shadow: 0 0 12px #00ffe7, 0 0 32px #0ff;
+    color: var(--accent);
+    text-shadow: 0 0 12px var(--accent), 0 0 32px #0ff;
 }
 
 .sub-title {
     margin-bottom: 24px;
     font-size: 1.3rem;
-    color: #a3ffe7;
-    text-shadow: 0 0 8px #00ffe744;
+    color: var(--accent2);
+    text-shadow: 0 0 8px var(--accent2);
 }
 
 form {
@@ -56,7 +72,7 @@ form {
 .input-label {
     display: block;
     margin-bottom: 7px;
-    color: #a3ffe7;
+    color: var(--accent2);
     font-weight: 500;
     text-align: left;
 }
@@ -66,12 +82,12 @@ form {
     padding: 12px 14px;
     font-size: 1.1rem;
     border-radius: 8px;
-    border: 1.5px solid #00ffe7;
+    border: 1.5px solid var(--accent);
     background: rgba(44, 54, 85, 0.25);
-    color: #e0e0e0;
+    color: var(--text-color);
     outline: none;
     transition: border 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 8px #00ffe744;
+    box-shadow: 0 0 8px var(--accent2);
     margin-bottom: 10px;
 }
 
@@ -79,7 +95,7 @@ form {
 .edit-button,
 .delete-button {
     width: 100%;
-    background: linear-gradient(90deg, #00ffe7 0%, #007cf0 100%);
+    background: linear-gradient(90deg, var(--accent) 0%, #007cf0 100%);
     color: #232526;
     border: none;
     padding: 12px 0;
@@ -89,7 +105,7 @@ form {
     cursor: pointer;
     font-weight: 600;
     letter-spacing: 0.05em;
-    box-shadow: 0 0 16px #00ffe7aa;
+    box-shadow: 0 0 16px var(--accent)aa;
     transition: background 0.3s, color 0.3s, box-shadow 0.3s;
     outline: none;
 }
@@ -97,9 +113,9 @@ form {
 .add-button:hover,
 .edit-button:hover,
 .delete-button:hover {
-    background: linear-gradient(90deg, #007cf0 0%, #00ffe7 100%);
+    background: linear-gradient(90deg, #007cf0 0%, var(--accent) 100%);
     color: #fff;
-    box-shadow: 0 0 32px #00ffe7cc, 0 0 8px #007cf0cc;
+    box-shadow: 0 0 32px var(--accent)cc, 0 0 8px #007cf0cc;
 }
 
 .button-group {
@@ -123,7 +139,7 @@ form {
     margin-bottom: 28px;
     border-radius: 18px;
     box-shadow: 0 4px 24px 0 rgba(0, 255, 231, 0.08);
-    border: 1.5px solid #00ffe744;
+    border: 1.5px solid var(--accent2);
 }
 
 .stock-table {
@@ -134,7 +150,7 @@ form {
     border-radius: 18px;
     overflow: hidden;
     background: rgba(30, 34, 44, 0.85);
-    box-shadow: 0 0 16px #00ffe722;
+    box-shadow: 0 0 16px var(--accent2)22;
 }
 
 .stock-table th,
@@ -142,14 +158,14 @@ form {
     padding: 14px 12px;
     text-align: left;
     background: rgba(44, 54, 85, 0.65);
-    border-bottom: 1.5px solid #00ffe722;
+    border-bottom: 1.5px solid var(--accent2);
     font-size: 1.05rem;
 }
 
 .stock-table th {
-    color: #00ffe7;
+    color: var(--accent);
     font-weight: 700;
-    text-shadow: 0 0 8px #00ffe744;
+    text-shadow: 0 0 8px var(--accent2);
     background: rgba(30, 34, 44, 0.95);
 }
 
@@ -163,10 +179,10 @@ form {
 }
 
 .profit {
-    background: linear-gradient(90deg, #00ffe7 0%, #a3ffe7 100%);
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
     color: #232526;
     font-weight: 700;
-    box-shadow: 0 0 8px #00ffe7aa;
+    box-shadow: 0 0 8px var(--accent)aa;
 }
 
 .loss {
@@ -174,6 +190,66 @@ form {
     color: #232526;
     font-weight: 700;
     box-shadow: 0 0 8px #ff4e50aa;
+}
+
+.dashboard {
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.dashboard-card {
+    flex: 1 1 180px;
+    background: rgba(44, 54, 85, 0.45);
+    border-radius: 16px;
+    padding: 24px 18px;
+    box-shadow: 0 2px 12px var(--accent2)22;
+    margin: 0 8px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: var(--accent2);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.card-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.dashboard-section {
+    margin-bottom: 18px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.recent-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 /* Responsive Styles */
@@ -221,6 +297,17 @@ form {
     .stock-table td {
         padding: 10px 6px;
         font-size: 0.98rem;
+    }
+    .dashboard-cards {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .dashboard-card {
+        margin: 0 0 12px 0;
+    }
+    .dashboard-actions {
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
