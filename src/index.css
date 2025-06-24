@@ -54,6 +54,39 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.portfolio {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+}
+
+.dashboard-card {
+  background: #1a1a1a;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 8px;
+  text-align: center;
+}
+
+.add-button {
+  background: #00ffe7;
+  color: #232526;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background: #ff4e50;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
