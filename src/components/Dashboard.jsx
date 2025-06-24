@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Dashboard.css"; // Ensure you have CSS for light and dark themes
 
-export default function Dashboard({ portfolio, recentActivity }) {
+export default function Dashboard({ portfolio, recentActivity, onAddClick }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -56,8 +56,12 @@ export default function Dashboard({ portfolio, recentActivity }) {
       <div className="dashboard-section">
         <div className="section-title">Quick Actions</div>
         <div className="dashboard-actions">
-          <button className="add-button" onClick={onAddClick}>Add Portfolio</button>
-          <button className="edit-button" onClick={onExportClick}>Export CSV</button>
+          <button className="add-button" onClick={onAddClick}>
+            Add Portfolio
+          </button>
+          <button className="edit-button" onClick={onExportClick}>
+            Export CSV
+          </button>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import StockDetailsModal from "./components/StockDetailsModal";
 import PortfolioAnalytics from "./components/PortfolioAnalytics";
 import Dashboard from "./components/Dashboard";
+import PortfolioForm from "./components/PortfolioForm";
 import { calculateCurrentValue, calculateInvestedAmount, calculateProfitLossPercentage } from './utils/portfolioUtils';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
     const [recentActivity, setRecentActivity] = useState([]);
     const [selectedStock, setSelectedStock] = useState(null);
     const [theme, setTheme] = useState("dark");
+    const [showPortfolioForm, setShowPortfolioForm] = useState(false);
 
     useEffect(() => {
         const fetchPortfolios = async () => {
@@ -52,10 +54,36 @@ const App = () => {
         document.body.setAttribute("data-theme", theme);
     }, [theme]);
 
+    const onAddClick = () => {
+        setShowPortfolioForm(true);
+    };
+
+    const handleAddPortfolio = (newPortfolio) => {
+        const portfolioWithDefaults = {
+            ...newPortfolio,
+            _id: `${Date.now()}-${Math.random()}`, // Generate a unique ID
+            stocks: [], // Initialize with an empty stocks array
+        };
+        setPortfolios([...portfolios, portfolioWithDefaults]);
+        setShowPortfolioForm(false);
+
+        // Optionally update recent activity
+        setRecentActivity([
+            `Added portfolio: ${newPortfolio.name}`,
+            ...recentActivity,
+        ]);
+    };
+
     return (
         <div className="container">
             <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
             <h1 className="title">Stock Portfolio Tracker</h1>
+            {showPortfolioForm && (
+                <PortfolioForm
+                    onSubmit={handleAddPortfolio}
+                    initialData={{}}
+                />
+            )}
             <FilterButtons
                 handleShowProfit={() => setShowProfit(true)}
                 handleShowLoss={() => setShowLoss(true)}
@@ -131,7 +159,11 @@ const App = () => {
                 />
             )}
             <PortfolioAnalytics portfolio={portfolios} />
-            <Dashboard portfolio={portfolios} recentActivity={recentActivity} />
+            <Dashboard
+                portfolio={portfolios}
+                recentActivity={recentActivity}
+                onAddClick={onAddClick}
+            />
             <StockDetailsModal
                 isOpen={!!selectedStock}
                 onRequestClose={() => setSelectedStock(null)}
