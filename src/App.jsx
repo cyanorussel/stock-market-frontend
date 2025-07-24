@@ -1,6 +1,6 @@
 //App.js
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 import PortfolioList from "./components/PortfolioList";
@@ -9,12 +9,11 @@ import ThemeToggle from "./components/ThemeToggle";
 import StockDetailsModal from "./components/StockDetailsModal";
 import PortfolioAnalytics from "./components/PortfolioAnalytics";
 import Dashboard from "./components/Dashboard";
-import PortfolioForm from "./components/PortfolioForm";
-import { calculateCurrentValue, calculateInvestedAmount, calculateProfitLossPercentage } from './utils/portfolioUtils';
+import { calculateCurrentValue, calculateInvestedAmount } from "./utils/portfolioUtils";
 
 const App = () => {
     const [portfolios, setPortfolios] = useState([]);
-    const [formData, setFormData] = useState({
+    const [formData] = useState({
         name: "",
         symbol: "",
         quantity: "",
@@ -26,15 +25,15 @@ const App = () => {
     const [showProfit, setShowProfit] = useState(false);
     const [showLoss, setShowLoss] = useState(false);
     const [editingStock, setEditingStock] = useState(null);
-    const [recentActivity, setRecentActivity] = useState([]);
+    const [recentActivity] = useState([]);
     const [selectedStock, setSelectedStock] = useState(null);
     const [theme, setTheme] = useState("dark");
-    const [showPortfolioForm, setShowPortfolioForm] = useState(false);
 
     useEffect(() => {
         const fetchPortfolios = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/portfolios");
+                const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+                const response = await axios.get(`${API_BASE_URL}/portfolios`);
                 setPortfolios(response.data);
                 setLoading(false);
             } catch (error) {
@@ -45,45 +44,14 @@ const App = () => {
         fetchPortfolios();
     }, []);
 
-    const toggleTheme = useCallback(() => {
-        setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
-        document.body.setAttribute("data-theme", theme === "dark" ? "light" : "dark");
-    }, [theme]);
-
-    useEffect(() => {
-        document.body.setAttribute("data-theme", theme);
-    }, [theme]);
-
-    const onAddClick = () => {
-        setShowPortfolioForm(true);
-    };
-
-    const handleAddPortfolio = (newPortfolio) => {
-        const portfolioWithDefaults = {
-            ...newPortfolio,
-            _id: `${Date.now()}-${Math.random()}`, // Generate a unique ID
-            stocks: [], // Initialize with an empty stocks array
-        };
-        setPortfolios([...portfolios, portfolioWithDefaults]);
-        setShowPortfolioForm(false);
-
-        // Optionally update recent activity
-        setRecentActivity([
-            `Added portfolio: ${newPortfolio.name}`,
-            ...recentActivity,
-        ]);
+    const toggleTheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark");
     };
 
     return (
         <div className="container">
             <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
             <h1 className="title">Stock Portfolio Tracker</h1>
-            {showPortfolioForm && (
-                <PortfolioForm
-                    onSubmit={handleAddPortfolio}
-                    initialData={{}}
-                />
-            )}
             <FilterButtons
                 handleShowProfit={() => setShowProfit(true)}
                 handleShowLoss={() => setShowLoss(true)}
@@ -156,14 +124,11 @@ const App = () => {
                     }
                     setEditingStock={setEditingStock}
                     formData={formData}
+                    setSelectedStock={setSelectedStock}
                 />
             )}
             <PortfolioAnalytics portfolio={portfolios} />
-            <Dashboard
-                portfolio={portfolios}
-                recentActivity={recentActivity}
-                onAddClick={onAddClick}
-            />
+            <Dashboard portfolio={portfolios} recentActivity={recentActivity} />
             <StockDetailsModal
                 isOpen={!!selectedStock}
                 onRequestClose={() => setSelectedStock(null)}
