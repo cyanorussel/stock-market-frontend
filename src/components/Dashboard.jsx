@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import "../Dashboard.css"; // Ensure you have CSS for light and dark themes
 
-export default function Dashboard({ portfolio, recentActivity, onAddClick }) {
+export default function Dashboard({ portfolio, recentActivity, onAddClick, onExportClick }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
@@ -18,8 +19,6 @@ export default function Dashboard({ portfolio, recentActivity, onAddClick }) {
   );
   const profitLoss = totalValue - totalCost;
   const percentChange = totalCost === 0 ? 0 : ((profitLoss / totalCost) * 100).toFixed(2);
-
-  if (!recentActivity || recentActivity.length === 0) return null;
 
   return (
     <div className={`dashboard ${isDarkMode ? "dark-mode" : "light-mode"}`}>
@@ -56,14 +55,17 @@ export default function Dashboard({ portfolio, recentActivity, onAddClick }) {
       <div className="dashboard-section">
         <div className="section-title">Quick Actions</div>
         <div className="dashboard-actions">
-          <button className="add-button" onClick={onAddClick}>
-            Add Portfolio
-          </button>
-          <button className="edit-button" onClick={onExportClick}>
-            Export CSV
-          </button>
+          <button className="add-button" onClick={onAddClick}>Add Portfolio</button>
+          <button className="edit-button" onClick={onExportClick}>Export CSV</button>
         </div>
       </div>
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  portfolio: PropTypes.array.isRequired,
+  recentActivity: PropTypes.array.isRequired,
+  onAddClick: PropTypes.func,
+  onExportClick: PropTypes.func,
+};
