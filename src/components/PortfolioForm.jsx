@@ -1,6 +1,7 @@
 // filepath: src/components/PortfolioForm.jsx
 
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 const PortfolioForm = ({ onSubmit, initialData = {} }) => {
   const [formData, setFormData] = useState({
@@ -13,26 +14,11 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { quantity, purchasePrice, currentPrice } = formData;
-
-    if (!quantity || !purchasePrice || !currentPrice) {
-      alert("All fields are required.");
-      return;
-    }
-
-    if (quantity <= 0 || purchasePrice <= 0 || currentPrice <= 0) {
-      alert("Please enter valid positive numbers.");
-      return;
-    }
-
     onSubmit(formData);
   };
 
@@ -81,6 +67,11 @@ const PortfolioForm = ({ onSubmit, initialData = {} }) => {
       <button type="submit">Save</button>
     </form>
   );
+};
+
+PortfolioForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  initialData: PropTypes.object,
 };
 
 export default PortfolioForm;
